@@ -7,6 +7,6 @@ if __name__ == '__main__':
     with timer:
         with open('data/6500titles.csv', 'rb') as csv_file:
             for line in csv_file:
-                trie.insert_word(line.rstrip('\n'))
+                trie.insert_word(line.decode('utf-8').rstrip('\n'))
     print(f'--- Dataset load time in {timer.result:.4f} seconds ---')
     app.run()

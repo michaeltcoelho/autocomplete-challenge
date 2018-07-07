@@ -1,3 +1,6 @@
+.PHONY: clean
+clean:
+	@find . -regex "\(.*__pycache__.*\|*.py[co]\)" -delete
 
 .PHONY: test
 test:

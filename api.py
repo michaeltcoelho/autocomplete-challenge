@@ -5,6 +5,8 @@ from utils import Timer
 
 
 app = Flask('autocomplete')
+app.config['ENV'] = 'development'
+app.config['TESTING'] = True
 
 trie = Trie()
 
