@@ -60,7 +60,7 @@ def test_should_insert_and_flag_last_node():
 
 def test_word_not_found_in_trie():
     trie = Trie()
-    trie.insert('facebook')
+    trie.insert('Facebook')
     assert trie.contains('facebok') is False
     assert trie.contains('foo') is False
 
@@ -70,7 +70,7 @@ def test_list_trie_words_by_prefix():
     trie.insert('Facebook')
     trie.insert('Facebook Lite')
     trie.insert('Faca')
-    result = list(trie.iteritems('Face'))
+    result = list(trie.iteritems('face'))
     assert result == ['Facebook', 'Facebook Lite']
 
 

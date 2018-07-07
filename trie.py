@@ -9,24 +9,30 @@ class TrieNode:
         self.children = {}
         self.is_last_node = is_last_node
 
+    def sanitize_char(self, char):
+        return char.lower()
+
     def has_children(self):
         return not self.children == {}
 
     def has_child_node(self, char):
-        return char in self.children
+        sanitized_char = self.sanitize_char(char)
+        return sanitized_char in self.children
 
     def get_child_node(self, char):
-        return self.children[char]
+        sanitized_char = self.sanitize_char(char)
+        return self.children[sanitized_char]
 
     def add_child_node(self, char, is_last_node=False):
-        node = self.children[char] = TrieNode(char, is_last_node)
+        sanitized_char = self.sanitize_char(char)
+        node = self.children[sanitized_char] = TrieNode(char, is_last_node)
         return node
 
     def get_word(self, prefix):
         if self.is_last_node:
             yield prefix
         for char, node in self.children.items():
-            yield from node.get_word(prefix + char)
+            yield from node.get_word(prefix + node.char)
 
     def set_as_last_node(self):
         self.is_last_node = True
@@ -59,6 +65,9 @@ class Trie:
 
     def iteritems(self, prefix=''):
         current_node = self.head_node
+        node_chars = []
         for char in prefix:
             current_node = current_node.get_child_node(char)
+            node_chars.append(current_node.char)
+        prefix = ''.join(node_chars)
         yield from current_node.get_word(prefix)
