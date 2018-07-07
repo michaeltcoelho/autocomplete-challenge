@@ -5,4 +5,8 @@ test:
 
 .PHONY: cov
 cov:
-	@pytest --cov=. tests/
+	@pytest --cov-report term-missing --cov=. tests/
+
+.PHONY: run
+run:
+	@python manage.py

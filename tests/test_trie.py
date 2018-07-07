@@ -47,36 +47,35 @@ def test_should_create_trie_with_head_wildcard_node():
 
 def test_should_insert_word_in_trie():
     trie = Trie()
-    trie.insert('facebook')
+    trie.insert_word('facebook')
     assert trie.contains('facebook')
 
 
 def test_should_insert_and_flag_last_node():
     trie = Trie()
-    trie.insert('facebook')
+    trie.insert_word('facebook')
     last_node = trie.get_last_word_node('facebook')
     assert last_node.is_last_node
 
 
 def test_word_not_found_in_trie():
     trie = Trie()
-    trie.insert('Facebook')
+    trie.insert_word('Facebook')
     assert trie.contains('facebok') is False
     assert trie.contains('foo') is False
 
 
 def test_list_trie_words_by_prefix():
     trie = Trie()
-    trie.insert('Facebook')
-    trie.insert('Facebook Lite')
-    trie.insert('Faca')
-    result = list(trie.iteritems('face'))
+    words = ['Facebook', 'Facebook Lite', 'Faca']
+    trie.insert_words(words)
+    result = list(trie.iterwords('face'))
     assert result == ['Facebook', 'Facebook Lite']
 
 
 def test_list_all_trie_words():
     trie = Trie()
-    trie.insert('foo')
-    trie.insert('bar')
-    result = list(trie.iteritems())
-    assert result == ['foo', 'bar']
+    words = ['foo', 'bar', 'buzz']
+    trie.insert_words(words)
+    result = list(trie.iterwords())
+    assert result == words

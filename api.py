@@ -1,11 +1,27 @@
-from flask import Flask
+from flask import Flask, request, jsonify
+
+from trie import Trie
+from utils import Timer
+
 
 app = Flask('autocomplete')
 
-@app.route('/ping/')
+trie = Trie()
+
+
+@app.route('/ping/', methods=['GET'])
 def ping():
     return 'pong!'
 
 
-if __name__ == '__main__':
-    app.run()
+@app.route('/autocomplete/', methods=['GET'])
+def autocomplete():
+    query = request.args.get('q', '')
+    timer = Timer()
+    with timer:
+        items = trie.iterwords(prefix=query)
+    response = {
+        'options': list(items),
+        'response_time': timer.result,
+    }
+    return jsonify(response), 200

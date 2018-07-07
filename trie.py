@@ -43,7 +43,7 @@ class Trie:
     def __init__(self):
         self.head_node = TrieNode(WILDCARD_CHAR)
 
-    def insert(self, word):
+    def insert_word(self, word):
         current_node = self.head_node
         for char in word:
             if current_node.has_child_node(char):
@@ -51,6 +51,10 @@ class Trie:
             else:
                 current_node = current_node.add_child_node(char)
         current_node.set_as_last_node()
+
+    def insert_words(self, words):
+        for word in words:
+            self.insert_word(word)
 
     def get_last_word_node(self, word):
         current_node = self.head_node
@@ -63,7 +67,7 @@ class Trie:
     def contains(self, word):
         return self.get_last_word_node(word) is not None
 
-    def iteritems(self, prefix=''):
+    def iterwords(self, prefix=''):
         current_node = self.head_node
         node_chars = []
         for char in prefix:
