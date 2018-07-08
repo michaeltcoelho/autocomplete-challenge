@@ -15,13 +15,9 @@ class TrieNode:
     def has_children(self):
         return True if self.children else False
 
-    def has_child_node(self, char):
-        sanitized_char = self.sanitize_char(char)
-        return sanitized_char in self.children
-
     def get_child_node(self, char):
         sanitized_char = self.sanitize_char(char)
-        return self.children[sanitized_char]
+        return self.children.get(sanitized_char)
 
     def add_child_node(self, char, is_last_node=False):
         sanitized_char = self.sanitize_char(char)
@@ -29,10 +25,8 @@ class TrieNode:
         return node
 
     def get_or_add_child_node(self, char, is_last_node=False):
-        child_node = None
-        if self.has_child_node(char):
-            child_node = self.get_child_node(char)
-        else:
+        child_node = self.get_child_node(char)
+        if child_node is None:
             child_node = self.add_child_node(char)
         return child_node
 
@@ -64,9 +58,9 @@ class Trie:
     def get_last_word_node(self, word):
         current_node = self.head_node
         for char in word:
-            if not current_node.has_child_node(char):
-                return None
             current_node = current_node.get_child_node(char)
+            if current_node is None:
+                return None
         return current_node
 
     def contains(self, word):
@@ -77,6 +71,8 @@ class Trie:
         node_chars = []
         for char in prefix:
             current_node = current_node.get_child_node(char)
+            if current_node is None:
+                return None
             node_chars.append(current_node.char)
         prefix = ''.join(node_chars)
         yield from current_node.get_word(prefix)

@@ -43,6 +43,14 @@ def test_should_iterwords_return_by_prefix():
     assert result == ['Facebook', 'Facebook Lite']
 
 
+def test_should_iterwords_with_a_prefix_that_does_not_exist():
+    trie = Trie()
+    words = ['foo', 'bar', 'buzz']
+    trie.insert_words(words)
+    result = list(trie.iterwords('foca'))
+    assert result == []
+
+
 def test_should_iterwords_return_all():
     trie = Trie()
     words = ['foo', 'bar', 'buzz']

@@ -12,7 +12,7 @@ def test_should_add_child_node_to_an_existent_node():
     trie_node = TrieNode('a')
     b_node = trie_node.add_child_node('b', True)
     assert trie_node.has_children()
-    assert trie_node.has_child_node('b')
+    assert trie_node.get_child_node('b') is not None
     assert b_node.char == 'b'
     assert b_node.is_last_node
     assert b_node.has_children() is False
@@ -28,7 +28,7 @@ def test_should_get_child_node():
 def test_should_get_or_add_child_node():
     trie_node = TrieNode('a')
     b_node = trie_node.get_or_add_child_node('b')
-    assert trie_node.has_child_node('b')
+    assert trie_node.get_child_node('b') is not None
     assert trie_node.get_or_add_child_node('b') == b_node
 
 
@@ -46,7 +46,7 @@ def test_should_set_trie_node_as_the_least_node():
 def test_should_trie_node_has_a_child_node():
     a_trie_node = TrieNode('a')
     a_trie_node.add_child_node('b')
-    assert a_trie_node.has_child_node('b')
+    assert a_trie_node.get_child_node('b') is not None
 
 
 def test_should_get_word_from_parent_trie_node():
