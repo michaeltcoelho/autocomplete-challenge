@@ -1,8 +1,8 @@
+import time
+
 from flask import Flask, request, jsonify
 
 from trie import Trie
-from utils import Timer
-
 
 app = Flask('autocomplete')
 
@@ -17,11 +17,11 @@ def ping():
 @app.route('/autocomplete/', methods=['GET'])
 def autocomplete():
     query = request.args.get('q', '')
-    timer = Timer()
-    with timer:
-        items = trie.iterwords(prefix=query)
+    start = time.perf_counter()
+    words = list(trie.iterwords(prefix=query))
+    end = time.perf_counter() - start
     response = {
-        'options': list(items),
-        'response_time': timer.result,
+        'options': words,
+        'time': f'It took {end:.8f} seconds',
     }
     return jsonify(response), 200
