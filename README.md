@@ -31,16 +31,10 @@ make run
 
 ### Testing
 
-Running tests:
+Running tests with coverage:
 
 ```bash
 make test
-```
-
-with coverage:
-
-```bash
-make cov
 ```
 
 ### Autocomplete
