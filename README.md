@@ -18,7 +18,7 @@ Go to `/autocomplete-challenge` directory:
 Run the following command:
 
 ```bash
-pip install -r requirements.txt
+make install
 ```
 
 ### Running

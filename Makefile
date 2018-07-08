@@ -2,6 +2,10 @@
 clean:
 	@find . -regex "\(.*__pycache__.*\|*.py[co]\)" -delete
 
+.PHONY: install
+install:
+	@pip install -r requirements.txt
+
 .PHONY: test
 test:
 	@pytest -s

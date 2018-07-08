@@ -13,7 +13,7 @@ class TrieNode:
         return char.lower()
 
     def has_children(self):
-        return not self.children == {}
+        return True if self.children else False
 
     def has_child_node(self, char):
         sanitized_char = self.sanitize_char(char)
@@ -27,6 +27,14 @@ class TrieNode:
         sanitized_char = self.sanitize_char(char)
         node = self.children[sanitized_char] = TrieNode(char, is_last_node)
         return node
+
+    def get_or_add_child_node(self, char, is_last_node=False):
+        child_node = None
+        if self.has_child_node(char):
+            child_node = self.get_child_node(char)
+        else:
+            child_node = self.add_child_node(char)
+        return child_node
 
     def get_word(self, prefix):
         if self.is_last_node:
@@ -46,10 +54,7 @@ class Trie:
     def insert_word(self, word):
         current_node = self.head_node
         for char in word:
-            if current_node.has_child_node(char):
-                current_node = current_node.get_child_node(char)
-            else:
-                current_node = current_node.add_child_node(char)
+            current_node = current_node.get_or_add_child_node(char)
         current_node.set_as_last_node()
 
     def insert_words(self, words):
